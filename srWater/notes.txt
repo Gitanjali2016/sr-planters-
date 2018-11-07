@@ -1,0 +1,11 @@
+1. Logging into the arduinos
+	username: root
+	password: arduino
+2. Do not plug in the usb and the power at the same time
+3. USB will power everything but the solenoid so you can test it with that.
+4. Use SFTP
+	sp1.local it ranges from sp1-sp6 is the address
+	username: root
+	password: arduino
+
+5. adjust the mp3opt variabable in the python files to make the volume louder
