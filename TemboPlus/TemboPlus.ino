@@ -33,14 +33,14 @@ String pythonScriptStart = "python /root/player.py -play";
 
 
 void setup() {
-//  Serial.begin(9600);
+  Serial.begin(9600);
 
   randomSeed(analogRead(A0));
   pinMode(solenoidPin, OUTPUT);
   
   // For debugging, wait until the serial console is connected
   delay(4000);
-//  while(!Serial);
+  while(!Serial);
   Bridge.begin();
 
   lcd.begin(8, 2);
@@ -108,7 +108,47 @@ void writeMessageToLCDandFireSolenoid() {
 }
 
 void loop() {
-  if (numRuns <= maxRuns) {
+  //new attempt
+   if (numRuns <= maxRuns) {
+    Serial.println("Running LatestTweet - Run #" + String(numRuns++));
+    
+    TembooChoreo LatestTweetChoreo;
+
+    // Invoke the Temboo client
+    LatestTweetChoreo.begin();
+
+    // Set Temboo account credentials
+    LatestTweetChoreo.setAccountName(TEMBOO_ACCOUNT);
+    LatestTweetChoreo.setAppKeyName(TEMBOO_APP_KEY_NAME);
+    LatestTweetChoreo.setAppKey(TEMBOO_APP_KEY);
+    
+    // Set Choreo inputs
+    LatestTweetChoreo.addInput("Query", "#donate");
+    LatestTweetChoreo.addInput("AccessToken", "1061687156337467393-yI4iPgBt2ZC81p72kAnwEIpAbCla4c");
+    LatestTweetChoreo.addInput("ConsumerKey", "aJi6hqwAQ54hnu46zqQM91l0u");
+    LatestTweetChoreo.addInput("ConsumerSecret", "RqCJnTPv6MDm6iURmXwJQLgpyrbNLna3RyKldHCYn2ldz3idOq");
+    LatestTweetChoreo.addInput("AccessTokenSecret", "RP1sOd3HfxtcfkiU4MOtNj4DPs5jSTo3wp2Dcw1o90yzq");
+    
+    // Identify the Choreo to run
+    LatestTweetChoreo.setChoreo("/Library/Twitter/Search/LatestTweet");
+    
+    // Run the Choreo; when results are available, print them to serial
+    LatestTweetChoreo.run();
+    
+    while(LatestTweetChoreo.available()) {
+      char c = LatestTweetChoreo.read();
+      Serial.print(c);
+    }
+    LatestTweetChoreo.close();
+  }
+
+  Serial.println("Waiting...");
+  delay(30000); // wait 30 seconds between LatestTweet calls
+
+
+  //Old CODE
+
+//  if (numRuns <= maxRuns) {
 //    Serial.println("Running LatestTweet - Run #" + String(numRuns++));
     
 //
@@ -176,20 +216,20 @@ void loop() {
 //      
 ////      Serial.println("No news is good news.");
       
-      if (chosenRandomTweetCycles <= 0) {
+      //if (chosenRandomTweetCycles <= 0) {
       
-        chosenRandomTweetCycles = random(randRepsLo, randRepsHi);
-        writeMessageToLCDandFireSolenoid();                               // takes 15 + 1 seconds
+        //chosenRandomTweetCycles = random(randRepsLo, randRepsHi);
+        //writeMessageToLCDandFireSolenoid();                               // takes 15 + 1 seconds
         
 //        Serial.println(F("Waiting..."));
-        delay(5000);                                                      // takes 5 seconds
+        //delay(5000);                                                      // takes 5 seconds
       
-      } else {
+      //} else {
 
-        chosenRandomTweetCycles -= 1;
+        //chosenRandomTweetCycles -= 1;
 
 //        Serial.println(F("Waiting..."));
-        delay(20000);                                                        // takes 20 seconds
+        //delay(20000);                                                        // takes 20 seconds
         
       }
 //    }
