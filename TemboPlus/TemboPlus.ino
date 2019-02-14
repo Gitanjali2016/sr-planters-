@@ -56,7 +56,7 @@ void setup() {
   lcd.clear();
   delay(4000);
   
-  
+
 }
 
 void writeMessageToLCDandFireSolenoid() {
@@ -123,11 +123,11 @@ void loop() {
     LatestTweetChoreo.setAppKey(TEMBOO_APP_KEY);
     
     // Set Choreo inputs
-    LatestTweetChoreo.addInput("Query", "#donate");
     LatestTweetChoreo.addInput("AccessToken", "1061687156337467393-yI4iPgBt2ZC81p72kAnwEIpAbCla4c");
+    LatestTweetChoreo.addInput("AccessTokenSecret", "RP1sOd3HfxtcfkiU4MOtNj4DPs5jSTo3wp2Dcw1o90yzq");
     LatestTweetChoreo.addInput("ConsumerKey", "aJi6hqwAQ54hnu46zqQM91l0u");
     LatestTweetChoreo.addInput("ConsumerSecret", "RqCJnTPv6MDm6iURmXwJQLgpyrbNLna3RyKldHCYn2ldz3idOq");
-    LatestTweetChoreo.addInput("AccessTokenSecret", "RP1sOd3HfxtcfkiU4MOtNj4DPs5jSTo3wp2Dcw1o90yzq");
+    LatestTweetChoreo.addInput("Query", "#donate");
     
     // Identify the Choreo to run
     LatestTweetChoreo.setChoreo("/Library/Twitter/Search/LatestTweet");
@@ -216,22 +216,22 @@ void loop() {
 //      
 ////      Serial.println("No news is good news.");
       
-      //if (chosenRandomTweetCycles <= 0) {
+      if (chosenRandomTweetCycles <= 0) {
       
-        //chosenRandomTweetCycles = random(randRepsLo, randRepsHi);
-        //writeMessageToLCDandFireSolenoid();                               // takes 15 + 1 seconds
+        chosenRandomTweetCycles = random(randRepsLo, randRepsHi);
+        writeMessageToLCDandFireSolenoid();                               // takes 15 + 1 seconds
         
-//        Serial.println(F("Waiting..."));
-        //delay(5000);                                                      // takes 5 seconds
+        Serial.println(F("Waiting..."));
+        delay(5000);                                                      // takes 5 seconds
       
-      //} else {
+      } else {
 
-        //chosenRandomTweetCycles -= 1;
+        chosenRandomTweetCycles -= 1;
 
-//        Serial.println(F("Waiting..."));
-        //delay(20000);                                                        // takes 20 seconds
+        Serial.println(F("Waiting..."));
+        delay(20000);                                                        // takes 20 seconds
         
       }
-//    }
+    }
   }
 }
